@@ -1,4 +1,4 @@
-name: Test
+name: Testing
 
 on:
   push:
@@ -28,4 +28,4 @@ jobs:
         ./build/tests_work
     - name: Make .exe file
       run:
-        gcc WordCount.c o WordCount.exe
+        gcc Lab1.c o Lab1.exe
