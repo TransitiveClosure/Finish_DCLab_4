@@ -6,6 +6,6 @@ add_subdirectory(googletest)
 
 include_directories(googletest/include)
 
-add_executable(tests_work tests.cpp)
+add_executable(tests_work test.cpp)
 
 target_link_libraries(tests_work PRIVATE gtest)
