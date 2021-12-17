@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(work)
+project(Lab1)
 
 add_subdirectory(googletest)
 
