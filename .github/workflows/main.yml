@@ -26,6 +26,3 @@ jobs:
     - name: Test
       run:
         ./build/tests_work
-    - name: Make .exe file
-      run:
-        gcc Lab1.c o Lab1.exe
