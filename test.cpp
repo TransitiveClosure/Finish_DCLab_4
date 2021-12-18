@@ -5,6 +5,12 @@
 TEST(checking_answer, check_option_c){ 
     EXPECT_EQ(fun(1,1),2);
 }
+TEST(checking_answer, check_option_c){ 
+    EXPECT_EQ(fun(2,1),3);
+}
+TEST(checking_answer, check_option_c){ 
+    EXPECT_EQ(fun(5,2),7);
+}
 
 int main(int argc, char**argv)
 {
