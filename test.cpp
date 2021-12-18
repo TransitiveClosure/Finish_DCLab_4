@@ -1,11 +1,6 @@
 #include <gtest/gtest.h>
 #include "Lab1.c"
 //int fun(int a, int b);
-typedef struct uint1024_t
-{
-    unsigned int element[32];
-} uint1024_t;
-
 uint1024_t t;
 uint1024_t num1 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 uint1024_t num2 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
