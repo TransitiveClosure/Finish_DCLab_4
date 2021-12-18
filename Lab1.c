@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
-#include <gtest/gtest.h>
 const int number_of_elements = 32;
 const int size_element = 32;
 
