@@ -1,7 +1,8 @@
 #include"Lab1.c"
 
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
-  int a = fun(1,1);
+    work_with_file(argc, argv);
+    return 0;
 }
