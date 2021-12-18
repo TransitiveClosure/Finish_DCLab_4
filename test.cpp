@@ -1,46 +1,89 @@
 #include <gtest/gtest.h>
 #include "Lab1.c"
 //int fun(int a, int b);
+typedef struct uint1024_t
+{
+    unsigned int element[32];
+} uint1024_t;
 
-TEST(checking_answer, check_option_c){
-    char *str[3] = { "", "-c", "TEST.txt"};
-    EXPECT_EQ(work_with_file(3,str),31);
-    str[3] = "--bytes";
-    EXPECT_EQ(work_with_file(3,str),31);
+uint1024_t t;
+uint1024_t num1 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+uint1024_t num2 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+TEST(fun_from_uint, positive_value){
+    t.element[0] = 10000;
+    EXPECT_EQ(from_uint(10000).element[0],t.element[0]);
 }
-TEST(checking_answer, check_option_l){
-    char *str[3] = { "", "-l", "TEST.txt"};
-    EXPECT_EQ(work_with_file(3,str),3);
-    str[3] = "--lines";
-    EXPECT_EQ(work_with_file(3,str),3);
+TEST(fun_from_uint, negative_value){
+    t.element[0] = UINT32_MAX - 1000 + 1;
+    EXPECT_EQ(from_uint(-1000).element[0],t.element[0]);
 }
-TEST(checking_answer, check_option_w){
-    char *str[3] = { "", "-w", "TEST.txt"};
-    EXPECT_EQ(work_with_file(3,str),4);
-    str[3] = "--words";
-    EXPECT_EQ(work_with_file(3,str),4);
+TEST(fun_from_uint, zero){
+    t.element[0] = 0;
+    EXPECT_EQ(from_uint(0).element[0],t.element[0]);
 }
-TEST(check_errors, check_error_1001){
-    char *str[2] = { "", "-c"};
-    EXPECT_EQ(work_with_file(2,str),-1001);
+TEST(fun_add_op, limits_value){
+    uint1024_t num1 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    uint1024_t num2 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    uint1024_t res = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    num1.element[0] = UINT32_MAX;
+    num2.element[0] = UINT32_MAX;
+    res.element[0] = UINT32_MAX - 1;
+    res.element[1] = 1;
+    EXPECT_EQ(add_op(num1, num2).element[0],res.element[0]);
+    EXPECT_EQ(add_op(num1, num2).element[1],res.element[1]);
 }
-TEST(check_errors, check_error_1002){
-    char *str[3] = { "", "-tgrgsdgsegwg", "TEST.txt"};
-    EXPECT_EQ(work_with_file(3,str),-1002);
+TEST(fun_add_op, simple_add){
+    uint1024_t num1 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    uint1024_t num2 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    uint1024_t res = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    num1.element[0] = 8;
+    num2.element[0] = 9;
+    res.element[0] = 17;
+    EXPECT_EQ(add_op(num1, num2).element[0],res.element[0]);
+    EXPECT_EQ(add_op(num1, num2).element[1],res.element[1]);
 }
-TEST(check_errors, check_error_1003){
-    char *str[3] = { "", "-l", "TEST.txtffffffffffffffffffffffffffffffffffuuuuuuufffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"};
-    EXPECT_EQ(work_with_file(3,str),-1003);
+TEST(fun_subtr_op, a_more_b){
+    uint1024_t num1 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    uint1024_t num2 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    uint1024_t res = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    num1.element[1] = 1;
+    num2.element[0] = 2422;
+    res.element[0] = UINT32_MAX - 2422 + 1;
+    EXPECT_EQ(subtr_op(num1, num2).element[0],res.element[0]);
+    EXPECT_EQ(subtr_op(num1, num2).element[1],res.element[1]);
 }
-TEST(check_errors, check_error_1004){
-    char *str[3] = { "", "-l", "file.txt"};
-   EXPECT_EQ(work_with_file(3,str),-1004);
+TEST(fun_subtr_op, b_more_a){
+    uint1024_t num1 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    uint1024_t num2 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    uint1024_t res = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    num1.element[0] = 1000000;
+    num2.element[1] = 1;
+    res.element[0] = 0;
+    EXPECT_EQ(subtr_op(num1, num2).element[0],res.element[0]);
+    EXPECT_EQ(subtr_op(num1, num2).element[1],res.element[1]);
 }
-TEST(check_errors, check_error_1005){
-    char *str[3] = { "", "-t", "TEST.txt"};
-    EXPECT_EQ(work_with_file(3,str),-1005);
+TEST(fun_mult_op, multiplication){
+    uint1024_t num1 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    uint1024_t num2 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    uint1024_t res = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    num1.element[0] = UINT32_MAX;
+    num2.element[0] = 10000;
+    res.element[0] = 4294957296;
+    res.element[1] = 9999;
+    EXPECT_EQ(mult_op(num1, num2).element[0],res.element[0]);
+    EXPECT_EQ(mult_op(num1, num2).element[1],res.element[1]);
 }
-
+TEST(fun_mult_op, multiplication_by_zero){
+    uint1024_t num1 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    uint1024_t num2 = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    uint1024_t res = {0,0,0,0,0,0,0,0,0,0,0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    num1.element[0] = UINT32_MAX;
+    num1.element[1] = UINT32_MAX;
+    num1.element[2] = UINT32_MAX;
+    num2.element[0] = 0;
+    EXPECT_EQ(mult_op(num1, num2).element[0],res.element[0]);
+    EXPECT_EQ(mult_op(num1, num2).element[1],res.element[1]);
+}
 int main(int argc, char**argv)
 {
   testing::InitGoogleTest();
