@@ -26,3 +26,6 @@ jobs:
     - name: Test
       run:
         ./build/tests_work
+    - name: Create_exe
+      run:
+        gcc main.c -o main.exe
